@@ -1,8 +1,6 @@
 package games.practice;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class MainGUI extends JFrame {
     private JLabel levelInfo;
@@ -11,7 +9,6 @@ public class MainGUI extends JFrame {
     private JButton MediumButton;
     private JButton HardButton;
     private JButton ExpertButton;
-
     private JPanel sudokuPanel;
 
 
@@ -25,12 +22,9 @@ public class MainGUI extends JFrame {
 
         sudokuPanel = new SudokuGUI().getSudokuPanel();
 
-        EasyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setContentPane(sudokuPanel);
-                setVisible(true);
-            }
+        EasyButton.addActionListener(e -> {
+            setContentPane(sudokuPanel);
+            setVisible(true);
         });
     }
 
