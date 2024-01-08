@@ -6,10 +6,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SudokuGUI {
     private JPanel SudokuPanel;
     private JTextField focus;
+    private List<List<JTextField>> textFields = new ArrayList<>();
 
     public SudokuGUI(){
         // General Formatting
@@ -30,6 +33,7 @@ public class SudokuGUI {
                 textField.setBorder(null);
 
                 SudokuPanel.add(textField);
+                textFields.get(j).add(textField);
             }
         }
 
@@ -59,6 +63,14 @@ public class SudokuGUI {
                             if(Character.isDigit(key)){
                                 if(Character.getNumericValue(key) != 0){
                                     focus.setText(String.valueOf(key));
+                                    for(int j = 0; j < 9; j++){
+                                        for(int k = 0; k < 9; k++){
+                                            JTextField currJTextField = textFields.get(j).get(k);
+                                            if(currJTextField == focus){
+                                                // Call Game Info Method
+                                            }   // Add configuration for 0 case
+                                        }
+                                    }
                                 }
                             }
 
