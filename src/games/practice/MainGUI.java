@@ -20,7 +20,7 @@ public class MainGUI extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        sudokuPanel = new SudokuGUI().getSudokuPanel();
+        sudokuPanel = new SudokuGUI(0).getSudokuPanel();
 
         EasyButton.addActionListener(e -> {
             setContentPane(sudokuPanel);
