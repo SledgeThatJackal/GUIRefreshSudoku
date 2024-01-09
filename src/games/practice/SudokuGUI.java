@@ -13,8 +13,12 @@ public class SudokuGUI {
     private JPanel SudokuPanel;
     private JTextField focus;
     private List<List<JTextField>> textFields = new ArrayList<>();
+    private GameInfo info;
 
-    public SudokuGUI(){
+    public SudokuGUI(int difficulty){
+        // Game Setup
+        info = new GameInfo(difficulty);
+
         // General Formatting
         Font defaultFont = new Font("SansSerif", Font.PLAIN, 20);
         SudokuPanel.setBackground(Color.BLACK);
@@ -23,14 +27,9 @@ public class SudokuGUI {
         GridLayout currentLayout = new GridLayout(0, 9, 3, 3);
         SudokuPanel.setLayout(currentLayout);
         for(int j = 0; j < 9; j++){
+            textFields.add(new ArrayList<>());
             for(int k = 0; k < 9; k++) {
-                JTextField textField = new JTextField();
-                textField.setEditable(false);
-                textField.setFont(defaultFont);
-                textField.setHorizontalAlignment(JTextField.CENTER);
-                textField.setBackground(Color.darkGray);
-                textField.setForeground(Color.LIGHT_GRAY);
-                textField.setBorder(null);
+                JTextField textField = createJTextField(defaultFont, j, k);
 
                 SudokuPanel.add(textField);
                 textFields.get(j).add(textField);
@@ -67,8 +66,8 @@ public class SudokuGUI {
                                         for(int k = 0; k < 9; k++){
                                             JTextField currJTextField = textFields.get(j).get(k);
                                             if(currJTextField == focus){
-                                                // Call Game Info Method
-                                            }   // Add configuration for 0 case
+                                                focus.setForeground(inputMove(j, k, Character.getNumericValue(key)) ? Color.LIGHT_GRAY : Color.RED);
+                                            }
                                         }
                                     }
                                 }
@@ -85,8 +84,32 @@ public class SudokuGUI {
         });
     }
 
+    private JTextField createJTextField(Font defaultFont, int x, int y) {
+        JTextField textField = new JTextField();
+        textField.setEditable(false);
+        textField.setFont(defaultFont);
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        textField.setBackground(Color.darkGray);
+        textField.setForeground(Color.LIGHT_GRAY);
+        textField.setBorder(null);
+
+        // If there is a pre-placed tile
+        if(info.getGame()[x][y] != 0){
+            textField.setFocusable(false);
+            textField.setForeground(new Color(0, 0 , 128)); // Navy
+            textField.setText(String.valueOf(info.getGame()[x][y]));
+        }
+        return textField;
+    }
+
     public JPanel getSudokuPanel() {
         return SudokuPanel;
     }
 
+    public boolean inputMove(int x, int y, int number){
+        info.getGame()[x][y] = number;
+
+        // Check if the number is in the correct place
+        return info.getGame()[x][y] == info.getGeneratedGame()[x][y];
+    }
 }
