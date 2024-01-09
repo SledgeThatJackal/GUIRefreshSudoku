@@ -38,10 +38,6 @@ public class GameInfo {
         return game;
     }
 
-    public void setGame(int[][] game) {
-        this.game = game;
-    }
-
     public int[][] getGeneratedGame() {
         return generatedGame;
     }
