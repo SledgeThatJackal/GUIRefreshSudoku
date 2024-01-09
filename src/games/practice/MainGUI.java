@@ -16,7 +16,7 @@ public class MainGUI extends JFrame {
         setContentPane(DifficultySelectorPanel);
         setTitle("Sudoku");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(750, 750);
+        setSize(800, 800);
         setLocationRelativeTo(null);
         setVisible(true);
 
