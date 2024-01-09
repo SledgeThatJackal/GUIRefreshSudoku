@@ -24,12 +24,31 @@ public class SudokuGUI {
         SudokuPanel.setBackground(Color.BLACK);
 
         // Tile Creation
-        GridLayout currentLayout = new GridLayout(0, 9, 3, 3);
+        GridLayout currentLayout = new GridLayout(0, 9, 0, 0);
         SudokuPanel.setLayout(currentLayout);
         for(int j = 0; j < 9; j++){
             textFields.add(new ArrayList<>());
             for(int k = 0; k < 9; k++) {
                 JTextField textField = createJTextField(defaultFont, j, k);
+
+                int top = 1;
+                int left = 1;
+                int bottom = 1;
+                int right = 1;
+
+                // Row
+                switch(j){
+                    case 2, 5 -> bottom = 5;
+                    case 3, 6 -> top = 5;
+                }
+
+                // Column
+                switch(k){
+                    case 2, 5 -> right = 5;
+                    case 3, 6 -> left = 5;
+                }
+
+                textField.setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
 
                 SudokuPanel.add(textField);
                 textFields.get(j).add(textField);
@@ -91,7 +110,6 @@ public class SudokuGUI {
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setBackground(Color.darkGray);
         textField.setForeground(Color.LIGHT_GRAY);
-        textField.setBorder(null);
 
         // If there is a pre-placed tile
         if(info.getGame()[x][y] != 0){
