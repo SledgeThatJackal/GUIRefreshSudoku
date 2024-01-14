@@ -11,6 +11,7 @@ import java.util.List;
 
 public class SudokuGUI {
     private JPanel SudokuPanel;
+    private JTextField textField1;
     private JTextField focus;
     private List<List<JTextField>> textFields = new ArrayList<>();
     private GameInfo info;
@@ -129,5 +130,13 @@ public class SudokuGUI {
 
         // Check if the number is in the correct place
         return info.getGame()[x][y] == info.getGeneratedGame()[x][y];
+    }
+
+    public JTextField getTextField1() {
+        return textField1;
+    }
+
+    public void setTextField1(JTextField textField1) {
+        this.textField1 = textField1;
     }
 }
