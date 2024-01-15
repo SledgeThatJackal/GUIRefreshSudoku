@@ -1,35 +1,35 @@
 package games.practice;
 
 import javax.swing.*;
+import java.awt.*;
 
-public class Cell {
+public class Cell{
 
     // Swing
-    private JTextField note1;
     private JPanel cell;
-    private JPanel note;
-    private JTextField note4;
-    private JTextField note7;
-    private JTextField note2;
-    private JTextField note3;
-    private JTextField note5;
-    private JTextField note6;
-    private JTextField note8;
-    private JTextField note9;
-    private JTabbedPane tabbedPane1;
-    private JPanel playerInput;
-    private JTextField userInput;
 
     // Game Fields
     private int playerValue;
-    private int actualValue;
+    private final int actualValue;
     private boolean isCorrect;
-    private boolean[] notes;
-    private boolean isLocked;
+    private boolean[] writtenNotes = new boolean[9];
+    private final boolean isLocked;
+    private Number number;
+    private Notes notes;
+    private final String numberCard = "number";
+    private final String notesCard = "notes";
 
-    public Cell(int actualValue, boolean isLocked) {
+
+    public Cell(int actualValue, boolean isLocked, Color backgroundColor, Color textColor) {
         this.actualValue = actualValue;
         this.isLocked = isLocked;
+        this.playerValue = isLocked ? actualValue : 0;
+
+        number = isLocked ? new Number(actualValue) : new Number();
+        notes = new Notes(backgroundColor, textColor);
+
+        cell.add(number.getNumberPanel(), numberCard);
+        cell.add(notes.getNotesPanel(), notesCard);
     }
 
     public int getPlayerValue() {
@@ -40,10 +40,6 @@ public class Cell {
         this.playerValue = playerValue;
     }
 
-    public JTextField getUserInput() {
-        return note1;
-    }
-
     public int getActualValue() {
         return actualValue;
     }
@@ -52,11 +48,31 @@ public class Cell {
         return isCorrect;
     }
 
-    public boolean[] getNotes() {
-        return notes;
+    public boolean[] getWrittenNotes() {
+        return writtenNotes;
     }
 
     public boolean isLocked() {
         return isLocked;
+    }
+
+    public JPanel getCell() {
+        return cell;
+    }
+
+    public void inputMove(int move){
+        playerValue = move;
+        number.setValue(move);
+
+        // Check if the numbers are equal and pass the T/F value into the Number Object to select a color to change to
+        number.setTextColorBasedOnValue(move == actualValue);
+    }
+
+    public void changeBackground(Color color){
+        number.getUserInput().setBackground(color);
+    }
+
+    public JTextField getNumberTextField(){
+        return number.getUserInput();
     }
 }
