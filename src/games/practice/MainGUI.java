@@ -10,6 +10,8 @@ public class MainGUI extends JFrame {
     private JButton HardButton;
     private JButton ExpertButton;
     private JPanel sudokuPanel;
+    private JPanel cellPanel;
+    private JPanel gamePanel;
 
 
     public MainGUI(){
@@ -20,11 +22,16 @@ public class MainGUI extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        sudokuPanel = new SudokuGUI(0).getSudokuPanel();
+        //sudokuPanel = new SudokuGUI(0).getSudokuPanel();
+        gamePanel = new GameGUI(0).getGamePanel();
 
         EasyButton.addActionListener(e -> {
-            setContentPane(sudokuPanel);
+            setContentPane(gamePanel);
             setVisible(true);
+        });
+
+        MediumButton.addActionListener(e -> {
+
         });
     }
 
