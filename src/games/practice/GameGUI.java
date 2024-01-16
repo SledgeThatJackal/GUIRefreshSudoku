@@ -21,40 +21,9 @@ public class GameGUI {
     private int x;
     private int y;
 
-    public GameGUI(int difficulty){
+    public GameGUI(){
         // Game Setup
-        info = new GameInfo(difficulty);
-
-        // Tile Creation
-        GridLayout currentLayout = new GridLayout(0, 9, 0, 0);
-        gamePanel.setLayout(currentLayout);
-        for(int j = 0; j < 9; j++){
-            for(int k = 0; k < 9; k++) {
-                Cell currentCell = new Cell(info.getGeneratedGame()[j][k], info.getGame()[j][k] != 0, backgroundColor, relatedColor);
-                cells[j][k] = currentCell;
-
-                int top = 1;
-                int left = 1;
-                int bottom = 1;
-                int right = 1;
-
-                // Row
-                switch(j){
-                    case 2, 5 -> bottom = 5;
-                    case 3, 6 -> top = 5;
-                }
-
-                // Column
-                switch(k){
-                    case 2, 5 -> right = 5;
-                    case 3, 6 -> left = 5;
-                }
-
-                currentCell.getCell().setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
-
-                gamePanel.add(currentCell.getCell());
-            }
-        }
+        info = new GameInfo();
 
         KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         focusManager.addPropertyChangeListener(new PropertyChangeListener(){
@@ -143,5 +112,40 @@ public class GameGUI {
 
     public JPanel getGamePanel() {
         return gamePanel;
+    }
+
+    public void createCells(int difficulty){
+        info.createBoard(difficulty);
+
+        // Tile Creation
+        GridLayout currentLayout = new GridLayout(0, 9, 0, 0);
+        gamePanel.setLayout(currentLayout);
+        for(int j = 0; j < 9; j++){
+            for(int k = 0; k < 9; k++) {
+                Cell currentCell = new Cell(info.getGeneratedGame()[j][k], info.getGame()[j][k] != 0, backgroundColor, relatedColor);
+                cells[j][k] = currentCell;
+
+                int top = 1;
+                int left = 1;
+                int bottom = 1;
+                int right = 1;
+
+                // Row
+                switch(j){
+                    case 2, 5 -> bottom = 5;
+                    case 3, 6 -> top = 5;
+                }
+
+                // Column
+                switch(k){
+                    case 2, 5 -> right = 5;
+                    case 3, 6 -> left = 5;
+                }
+
+                currentCell.getCell().setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
+
+                gamePanel.add(currentCell.getCell());
+            }
+        }
     }
 }
