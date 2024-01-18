@@ -2,9 +2,7 @@ package games.practice;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class MainGUI extends JFrame {
     private JPanel MainMenuPanel;
@@ -19,7 +17,6 @@ public class MainGUI extends JFrame {
     private GameGUI gameGUI;
     private Settings settings;
     private CardLayout cardLayout;
-
 
     public MainGUI(){
         setContentPane(MainMenuPanel);
@@ -39,11 +36,13 @@ public class MainGUI extends JFrame {
         EasyButton.addActionListener(e -> {
             gameGUI.createCells(0);
             cardLayout.show(MainMenuPanel, "game");
+            gameGUI.setIsDisplayed(true);
         });
 
         MediumButton.addActionListener(e -> {
             gameGUI.createCells(1);
             cardLayout.show(MainMenuPanel, "game");
+            gameGUI.setIsDisplayed(true);
         });
 
         HardButton.addActionListener(new ActionListener() {
@@ -51,6 +50,7 @@ public class MainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameGUI.createCells(2);
                 cardLayout.show(MainMenuPanel, "game");
+                gameGUI.setIsDisplayed(true);
             }
         });
 
@@ -59,6 +59,7 @@ public class MainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameGUI.createCells(3);
                 cardLayout.show(MainMenuPanel, "game");
+                gameGUI.setIsDisplayed(true);
             }
         });
 
@@ -75,13 +76,16 @@ public class MainGUI extends JFrame {
                 dispatchEvent(new WindowEvent(getFrames()[0], WindowEvent.WINDOW_CLOSING));
             }
         });
+
+        final AWTEventListener listener = event -> {
+            MouseEvent mE = (MouseEvent) event;
+            gameGUI.pressMouse(mE);
+        };
+
+        Toolkit.getDefaultToolkit ().addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK);
     }
 
     public static void main(String[] args) {
         new MainGUI();
-    }
-
-    private void setupGame(){
-
     }
 }
