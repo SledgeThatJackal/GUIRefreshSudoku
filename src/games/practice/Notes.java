@@ -13,9 +13,8 @@ public class Notes implements PropertyChangeListener {
     private JPanel notesPanel;
 
     // Fields
-    private final ArrayList<JTextField> notes;
-    private final Color noteTextColor = new Color(91, 91, 91, 0);
-    private final Color aNoteTextColor = new Color(91, 91, 91);
+    private final ArrayList<JLabel> notes;
+    private final Color noteTextColor = new Color(91, 91, 91);
 
     public Notes(Color backgroundColor, Color textColor, Font font, Cell cell) {
         notesPanel.setBackground(backgroundColor);
@@ -25,19 +24,18 @@ public class Notes implements PropertyChangeListener {
         notesPanel.setLayout(currentLayout);
 
         for(int i = 0; i < 9; i++) {
-            JTextField textField = new JTextField();
+            JLabel label = new JLabel();
 
-            textField.setEditable(false);
-            textField.setFont(font);
-            textField.setHorizontalAlignment(JTextField.CENTER);
-            textField.setBackground(backgroundColor);
-            textField.setForeground(noteTextColor);
-            textField.setBorder(null);
-            textField.setText(String.valueOf(i + 1));
-            textField.setFocusable(false);
+            label.setFont(font);
+            label.setHorizontalAlignment(JTextField.CENTER);
+            label.setBackground(backgroundColor);
+            label.setForeground(noteTextColor);
+            label.setBorder(null);
+            label.setText(String.valueOf(i + 1));
+            label.setVisible(false);
 
-            notes.add(textField);
-            notesPanel.add(textField);
+            notes.add(label);
+            notesPanel.add(label);
         }
 
         cell.addPropertyChangeListener(this);
@@ -47,7 +45,7 @@ public class Notes implements PropertyChangeListener {
         return notesPanel;
     }
 
-    public Set<JTextField> getNotes() {
+    public Set<JLabel> getNotes() {
         return Set.copyOf(notes);
     }
 
@@ -59,7 +57,7 @@ public class Notes implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if(Cell.VISIBLE_NOTE.equals(evt.getPropertyName())){
-            notes.get(((IndexedPropertyChangeEvent) evt).getIndex()).setForeground((Boolean) evt.getNewValue() ? aNoteTextColor : noteTextColor);
+            notes.get(((IndexedPropertyChangeEvent) evt).getIndex()).setVisible((Boolean) evt.getNewValue());
         }
     }
 }

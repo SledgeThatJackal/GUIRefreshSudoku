@@ -6,16 +6,16 @@ import java.awt.*;
 public class Number {
     // Swing Components
     private JPanel numberPanel;
-    private JTextField userInput;
+    private JLabel userInput;
     private Color textColor;
 
     public Number(Color backgroundColor, Color textColor, Font font) {
         this.textColor = textColor;
 
-        userInput.setEditable(false);
+        numberPanel.setBackground(backgroundColor);
+
         userInput.setFont(font);
         userInput.setHorizontalAlignment(JTextField.CENTER);
-        userInput.setBackground(backgroundColor);
         userInput.setForeground(textColor);
         userInput.setBorder(null);
         userInput.setFocusable(false);
@@ -39,7 +39,7 @@ public class Number {
         userInput.setForeground(isCorrect ? textColor : new Color(121, 0, 0));
     }
 
-    public JTextField getUserInput(){
+    public JLabel getUserInput(){
         return userInput;
     }
 }

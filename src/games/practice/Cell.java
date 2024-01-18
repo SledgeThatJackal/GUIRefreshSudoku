@@ -82,20 +82,20 @@ public class Cell{
     }
 
     public void changeBackground(Color color){
-        number.getUserInput().setBackground(color);
+        number.getNumberPanel().setBackground(color);
 
-        for(JTextField currentField: notes.getNotes()){
-            currentField.setBackground(color);
+        for(JLabel currentLabel: notes.getNotes()){
+            currentLabel.setBackground(color);
         }
 
         notes.changeBackgroundColor(color);
     }
 
-    public JTextField getNumberTextField(){
+    public JLabel getNumberTextField(){
         return number.getUserInput();
     }
 
-    public Set<JTextField> getNoteTextFields(){
+    public Set<JLabel> getNoteLabels(){
         return notes.getNotes();
     }
 
