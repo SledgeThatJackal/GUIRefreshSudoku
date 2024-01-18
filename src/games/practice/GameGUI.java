@@ -30,18 +30,68 @@ public class GameGUI{
     public GameGUI(){
         // Game Setup
         info = new GameInfo();
-//        tilePanel.addMouseListener(this);
 
-//        int condition = JComponent.WHEN_FOCUSED;
-//        InputMap iM = tilePanel.getInputMap(condition);
-//        ActionMap aM = tilePanel.getActionMap();
+        Action numAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(focus.isLocked()){
+                    return;
+                }
+
+                int key = Integer.parseInt(e.getActionCommand());
+
+                clearHighlighting();
+
+                if (creatingNotes) {
+                    focus.setWrittenNote(key);
+                } else {
+                    focus.inputMove(key);
+                }
+
+                highlightCells(key);
+
+                focus.changeCard();
+            }
+        };
+
+        Action deleteAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(focus.isLocked()){
+                    return;
+                }
+
+                focus.inputMove(0);
+                highlightCells(10);
+
+                focus.changeCard();
+            }
+        };
+
+        int condition = JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
+        InputMap iM = tilePanel.getInputMap(condition);
+        ActionMap aM = tilePanel.getActionMap();
+
+        // Assigning every number a key bind (1-9 and NumPad 1-9)
+        for(int i = 1; i <= 9; i++){
+            String value = String.valueOf(i);
+            iM.put(KeyStroke.getKeyStroke(value), value);
+            iM.put(KeyStroke.getKeyStroke("NUMPAD" + value), value);
+            aM.put(value, numAction);
+        }
+
+        // Assigning Backspace and Delete a key bind
+        iM.put(KeyStroke.getKeyStroke("BACK_SPACE"), "backSpace");
+        aM.put("backSpace", deleteAction);
+
+        iM.put(KeyStroke.getKeyStroke("DELETE"), "delete");
+        aM.put("delete", deleteAction);
 
 
         KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         focusManager.addPropertyChangeListener("focusOwner", new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent event){
                 if(event.getNewValue() instanceof JPanel){
-                    System.out.println(event.getNewValue());
                     if(focus != null){
                         clearHighlighting();
                     }
@@ -59,7 +109,7 @@ public class GameGUI{
                         }
                     }
 
-                    focusNumericValue(focus.getPlayerValue() > 0 ? focus.getPlayerValue() : 10);
+                    highlightCells(focus.getPlayerValue() > 0 ? focus.getPlayerValue() : 10);
                 }
             }
         });
@@ -72,7 +122,7 @@ public class GameGUI{
         });
     }
 
-    public void focusNumericValue(int num){
+    public void highlightCells(int num){
         if(num == 0){
             return;
         }
@@ -140,38 +190,6 @@ public class GameGUI{
                 tilePanel.add(currentCell.getCell());
             }
         }
-    }
-
-    public void keyEventMethod(KeyEvent e){
-        char key = e.getKeyChar();
-
-        if(key != '0'){
-            clearHighlighting();
-        }
-
-        // Only changing the TextField if the character pressed is 1-9
-        if(Character.isDigit(key)){
-            if(Character.getNumericValue(key) != 0){
-                int input = Character.getNumericValue(key);
-
-                if (creatingNotes) {
-                    focus.setWrittenNote(input);
-                } else {
-                    focus.inputMove(input);
-                }
-
-                focusNumericValue(input);
-            }
-        }
-
-        // Checking if user hits backspace
-        if(e.getKeyCode() == 8){
-            focus.inputMove(0);
-
-            focusNumericValue(10);
-        }
-
-        focus.changeCard();
     }
 
     public void setIsDisplayed(boolean isDisplayed){
