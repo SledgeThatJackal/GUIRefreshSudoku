@@ -7,21 +7,24 @@ public class Number {
     // Swing Components
     private JPanel numberPanel;
     private JTextField userInput;
+    private Color textColor;
 
-    public Number() {
+    public Number(Color backgroundColor, Color textColor, Font font) {
+        this.textColor = textColor;
+
         userInput.setEditable(false);
-        userInput.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        userInput.setFont(font);
         userInput.setHorizontalAlignment(JTextField.CENTER);
-        userInput.setBackground(Color.darkGray);
-        userInput.setForeground(Color.LIGHT_GRAY);
+        userInput.setBackground(backgroundColor);
+        userInput.setForeground(textColor);
         userInput.setBorder(null);
+        userInput.setFocusable(false);
     }
 
-    public Number(int value) {
-        this();
+    public Number(int value, Color backgroundColor, Color textColor, Font font) {
+        this(backgroundColor, textColor, font);
         userInput.setText(String.valueOf(value));
-        userInput.setFocusable(false);
-        userInput.setForeground(new Color(0, 0 , 128)); // Navy
+        userInput.setForeground(new Color(0, 0, 0));
     }
 
     public void setValue(int value) {
@@ -33,7 +36,7 @@ public class Number {
     }
 
     public void setTextColorBasedOnValue(boolean isCorrect){
-        userInput.setForeground(isCorrect ? Color.LIGHT_GRAY : Color.RED);
+        userInput.setForeground(isCorrect ? textColor : new Color(121, 0, 0));
     }
 
     public JTextField getUserInput(){
