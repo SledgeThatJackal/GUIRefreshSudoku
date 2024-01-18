@@ -36,13 +36,13 @@ public class MainGUI extends JFrame {
         EasyButton.addActionListener(e -> {
             gameGUI.createCells(0);
             cardLayout.show(MainMenuPanel, "game");
-            gameGUI.setIsDisplayed(true);
+            gameGUI.toggleIsDisplayed();
         });
 
         MediumButton.addActionListener(e -> {
             gameGUI.createCells(1);
             cardLayout.show(MainMenuPanel, "game");
-            gameGUI.setIsDisplayed(true);
+            gameGUI.toggleIsDisplayed();
         });
 
         HardButton.addActionListener(new ActionListener() {
@@ -50,7 +50,7 @@ public class MainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameGUI.createCells(2);
                 cardLayout.show(MainMenuPanel, "game");
-                gameGUI.setIsDisplayed(true);
+                gameGUI.toggleIsDisplayed();
             }
         });
 
@@ -59,7 +59,7 @@ public class MainGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameGUI.createCells(3);
                 cardLayout.show(MainMenuPanel, "game");
-                gameGUI.setIsDisplayed(true);
+                gameGUI.toggleIsDisplayed();
             }
         });
 

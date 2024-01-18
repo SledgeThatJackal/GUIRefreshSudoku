@@ -2,26 +2,26 @@ package games.practice;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 
 public class GameGUI{
     private JPanel gamePanel;
     private JPanel tilePanel;
     private JPanel helpPanel;
     private JButton notesButton;
-    private JTextField textField1;
-    private Cell[][] cells = new Cell[9][9];
-    private GameInfo info;
+    private final Cell[][] cells = new Cell[9][9];
+    private final GameInfo info;
     private Cell focus;
 
     // Fields
-    private Color focusedColor = new Color(145, 144, 144);
-    private Color relatedColor = new Color(180, 180, 180);
-    private Color backgroundColor = new Color(103, 140, 152);
-    private Color textColor = new Color(39, 86, 2);
-    private Font font = new Font("SansSerif", Font.BOLD, 20);
+    private final Color focusedColor = new Color(145, 144, 144);
+    private final Color relatedColor = new Color(180, 180, 180);
+    private final Color backgroundColor = new Color(103, 140, 152);
+    private final Color textColor = new Color(39, 86, 2);
+    private final Font font = new Font("SansSerif", Font.BOLD, 20);
     private int x;
     private int y;
     private boolean creatingNotes = false;
@@ -89,28 +89,26 @@ public class GameGUI{
 
 
         KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        focusManager.addPropertyChangeListener("focusOwner", new PropertyChangeListener(){
-            public void propertyChange(PropertyChangeEvent event){
-                if(event.getNewValue() instanceof JPanel){
-                    if(focus != null){
-                        clearHighlighting();
-                    }
+        focusManager.addPropertyChangeListener("focusOwner", event -> {
+            if(event.getNewValue() instanceof JPanel){
+                if(focus != null){
+                    clearHighlighting();
+                }
 
-                    // Update Object with Focus
-                    for(int j = 0; j < 9; j++){
-                        for(int k = 0; k < 9; k++) {
-                            if(cells[j][k].getCell().equals((JPanel) event.getNewValue())){
-                                focus = cells[j][k];
-                                x = j;
-                                y = k;
+                // Update Object with Focus
+                for(int j = 0; j < 9; j++){
+                    for(int k = 0; k < 9; k++) {
+                        if(cells[j][k].getCell().equals(event.getNewValue())){
+                            focus = cells[j][k];
+                            x = j;
+                            y = k;
 
-                                j = k = 10;
-                            }
+                            j = k = 10;
                         }
                     }
-
-                    highlightCells(focus.getPlayerValue() > 0 ? focus.getPlayerValue() : 10);
                 }
+
+                highlightCells(focus.getPlayerValue() > 0 ? focus.getPlayerValue() : 10);
             }
         });
 
@@ -153,10 +151,6 @@ public class GameGUI{
         return gamePanel;
     }
 
-    public JPanel getTilePanel(){
-        return tilePanel;
-    }
-
     public void createCells(int difficulty){
         info.createBoard(difficulty);
 
@@ -192,8 +186,8 @@ public class GameGUI{
         }
     }
 
-    public void setIsDisplayed(boolean isDisplayed){
-        this.isDisplayed = isDisplayed;
+    public void toggleIsDisplayed(){
+        this.isDisplayed = true;
     }
 
     public void pressMouse(MouseEvent mE){

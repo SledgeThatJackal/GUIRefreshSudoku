@@ -51,15 +51,6 @@ public class Cell{
     public int getPlayerValue() {
         return playerValue;
     }
-
-    public void setPlayerValue(int playerValue) {
-        this.playerValue = playerValue;
-    }
-
-    public int getActualValue() {
-        return actualValue;
-    }
-
     public boolean isCorrect() {
         return isCorrect;
     }
@@ -91,16 +82,8 @@ public class Cell{
         notes.changeBackgroundColor(color);
     }
 
-    public JLabel getNumberTextField(){
-        return number.getUserInput();
-    }
-
     public Set<JLabel> getNoteLabels(){
         return notes.getNotes();
-    }
-
-    public boolean[] getWrittenNotes() {
-        return writtenNotes;
     }
 
     public void setWrittenNotes(boolean[] writtenNotes) {
