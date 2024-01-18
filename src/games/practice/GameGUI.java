@@ -87,7 +87,6 @@ public class GameGUI{
         iM.put(KeyStroke.getKeyStroke("DELETE"), "delete");
         aM.put("delete", deleteAction);
 
-
         KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         focusManager.addPropertyChangeListener("focusOwner", event -> {
             if(event.getNewValue() instanceof JPanel){

@@ -14,10 +14,10 @@ public class Notes implements PropertyChangeListener {
 
     // Fields
     private final ArrayList<JLabel> notes;
-    private final Color noteTextColor = new Color(91, 91, 91);
 
-    public Notes(Color backgroundColor, Color textColor, Font font, Cell cell) {
+    public Notes(Color backgroundColor, Font font, Cell cell) {
         notesPanel.setBackground(backgroundColor);
+        Color noteTextColor = new Color(91, 91, 91);
 
         notes = new ArrayList<>();
         GridLayout currentLayout = new GridLayout(3, 3, 0, 0);

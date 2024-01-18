@@ -36,7 +36,7 @@ public class Cell{
         cell.setFocusable(true);
 
         number = isLocked ? new Number(actualValue, backgroundColor, textColor, font) : new Number(backgroundColor, textColor, font);
-        notes = new Notes(backgroundColor, textColor, font, this);
+        notes = new Notes(backgroundColor, font, this);
 
         cell.add(number.getNumberPanel(), numberCard);
         cell.add(notes.getNotesPanel(), notesCard);
