@@ -47,6 +47,11 @@ public class GameGUI{
                 clearHighlighting();
 
                 if (creatingNotes) {
+                    if(focus.getPlayerValue() > 0 || checkNote(key)){
+                        highlightCells(focus.getPlayerValue());
+                        return;
+                    }
+
                     focus.setWrittenNote(key);
                 } else {
                     focus.inputMove(key);
@@ -117,7 +122,7 @@ public class GameGUI{
 
                 // Highlighting all cells related to the cell with focus,
                 // if a player removes their value it will highlight everything except for a related number
-                highlightCells(focus.getPlayerValue() > 0 ? focus.getPlayerValue() : 10);
+                highlightCells(focus.getPlayerValue() != 0 ? focus.getPlayerValue() : 10);
             }
         });
 
@@ -143,6 +148,10 @@ public class GameGUI{
                 // Row, Column, Block, Number
                 if(x == j || y == k || ((x / 3) == (j / 3) && (y / 3)  == (k / 3)) || currentCell.getPlayerValue() == num){
                     currentCell.changeBackground(Resources.REALTED_COLOR);
+                } else {
+                    if(num < 10){
+                        currentCell.highlightNote(num - 1, true);
+                    }
                 }
             }
         }
@@ -156,7 +165,13 @@ public class GameGUI{
     public void clearHighlighting(){
         for(int j = 0; j < 9; j++) {
             for (int k = 0; k < 9; k++) {
-                cells[j][k].changeBackground(Resources.SUDOKU_BACKGROUND_COLOR);
+                Cell currentCell = cells[j][k];
+
+                currentCell.changeBackground(Resources.SUDOKU_BACKGROUND_COLOR);
+
+                for(int i = 0; i < 9; i++){
+                    currentCell.highlightNote(i, false);
+                }
             }
         }
     }
@@ -230,5 +245,19 @@ public class GameGUI{
                 c.requestFocusInWindow();
             }
         }
+    }
+
+    private boolean checkNote(int number){
+        for(int j = 0; j < 9; j++) {
+            for (int k = 0; k < 9; k++) {
+                if(x == j || y == k || ((x / 3) == (j / 3) && (y / 3)  == (k / 3))){
+                    if(cells[j][k].getPlayerValue() == number){
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

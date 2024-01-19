@@ -70,6 +70,17 @@ public class Cell{
     }
 
     /**
+     * Highlights a note on a cell
+     * @param index Which note is getting highlighted
+     * @param highlight enable/disable highlighting
+     */
+    public void highlightNote(int index, boolean highlight){
+        if(writtenNotes[index]){
+            notes.highlightNote(index, highlight);
+        }
+    }
+
+    /**
      * Sets the cell's value based on the user input and changes colors accordingly
      * @param move The number a user inputs onto a cell
      */
@@ -89,6 +100,10 @@ public class Cell{
     public void changeBackground(Color color){
         number.changeBackgroundColor(color);
         notes.changeBackgroundColor(color);
+    }
+
+    public boolean[] getWrittenNotes() {
+        return writtenNotes;
     }
 
     /**

@@ -38,6 +38,11 @@ public class Resources {
     public static final Color NOTE_TEXT_COLOR = new Color(91, 91, 91);
 
     /**
+     * The color for highlighted notes
+     */
+    public static final Color NOTE_HIGHLIGHT_COLOR = new Color(49, 52, 72);
+
+    /**
      * The default font for all text in the application
      */
     public static final Font FONT = new Font("SansSerif", Font.BOLD, 20);
