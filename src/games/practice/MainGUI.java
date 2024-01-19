@@ -27,7 +27,7 @@ public class MainGUI extends JFrame implements ActionListener {
         setContentPane(MainMenuPanel);
         setTitle("Sudoku");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(800, 800);
+        setSize(1400, 1200);
         setLocationRelativeTo(null);
         setVisible(true);
 
