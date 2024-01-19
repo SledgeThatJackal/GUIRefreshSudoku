@@ -30,6 +30,7 @@ public class GameGUI{
     public GameGUI(){
         // Game Setup
         info = new GameInfo();
+        notesButton.setBackground(Color.RED);
 
         Action numAction = new AbstractAction() {
             @Override
@@ -115,6 +116,7 @@ public class GameGUI{
             @Override
             public void actionPerformed(ActionEvent e) {
                 creatingNotes = !creatingNotes;
+                notesButton.setBackground(creatingNotes ? Color.GREEN : Color.RED);
             }
         });
     }
