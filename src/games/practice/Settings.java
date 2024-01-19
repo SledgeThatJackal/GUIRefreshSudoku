@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
+/**
+ * (WIP) Might one day control the settings menu/options
+ */
 public class Settings{
-
-    // Swing
     private JPanel SettingsPanel;
 
-    // Fields
     JMenuBar menuBar;
     JMenu menu, subMenu;
     JMenuItem menuItem;

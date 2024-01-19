@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * Creates the board and runs general game logic
+ */
 public class GameGUI{
     private JPanel gamePanel;
     private JPanel tilePanel;
@@ -16,22 +19,23 @@ public class GameGUI{
     private final GameInfo info;
     private Cell focus;
 
-    // Fields
-    private final Color focusedColor = new Color(145, 144, 144);
-    private final Color relatedColor = new Color(180, 180, 180);
-    private final Color backgroundColor = new Color(103, 140, 152);
-    private final Color textColor = new Color(39, 86, 2);
-    private final Font font = new Font("SansSerif", Font.BOLD, 20);
     private int x;
     private int y;
     private boolean creatingNotes = false;
-    private boolean isDisplayed = false;
 
+    /**
+     * Stops the mouse event from running unless the panel is ACTUALLY displayed
+     */
+    public static boolean isDisplayed = false;
+
+    /**
+     * Sets up focus events, key binds, and holds all 81 cells on the game board
+     */
     public GameGUI(){
-        // Game Setup
         info = new GameInfo();
         notesButton.setBackground(Color.RED);
 
+        // An action that sets the number a tile displays based on the key pressed
         Action numAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,6 +59,7 @@ public class GameGUI{
             }
         };
 
+        // An action for removing a player provided value
         Action deleteAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -69,6 +74,7 @@ public class GameGUI{
             }
         };
 
+        // This condition was chosen, so the panels with focus contained in the tilePanel would trigger them
         int condition = JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
         InputMap iM = tilePanel.getInputMap(condition);
         ActionMap aM = tilePanel.getActionMap();
@@ -82,22 +88,24 @@ public class GameGUI{
         }
 
         // Assigning Backspace and Delete a key bind
-        iM.put(KeyStroke.getKeyStroke("BACK_SPACE"), "backSpace");
-        aM.put("backSpace", deleteAction);
+        iM.put(KeyStroke.getKeyStroke("BACK_SPACE"), Resources.BACKSPACE);
+        aM.put(Resources.BACKSPACE, deleteAction);
 
-        iM.put(KeyStroke.getKeyStroke("DELETE"), "delete");
-        aM.put("delete", deleteAction);
+        iM.put(KeyStroke.getKeyStroke("DELETE"), Resources.DELETE);
+        aM.put(Resources.DELETE, deleteAction);
 
+        // A generic FocusManager for detecting when a focus change occurs
         KeyboardFocusManager focusManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         focusManager.addPropertyChangeListener("focusOwner", event -> {
             if(event.getNewValue() instanceof JPanel){
-                if(focus != null){
-                    clearHighlighting();
-                }
+                // Removing all the highlighting on the board from a previous focus owner
+                clearHighlighting();
 
                 // Update Object with Focus
                 for(int j = 0; j < 9; j++){
                     for(int k = 0; k < 9; k++) {
+
+                        // Grabbing the correct cell based on the panel with focus
                         if(cells[j][k].getCell().equals(event.getNewValue())){
                             focus = cells[j][k];
                             x = j;
@@ -108,6 +116,8 @@ public class GameGUI{
                     }
                 }
 
+                // Highlighting all cells related to the cell with focus,
+                // if a player removes their value it will highlight everything except for a related number
                 highlightCells(focus.getPlayerValue() > 0 ? focus.getPlayerValue() : 10);
             }
         });
@@ -121,6 +131,10 @@ public class GameGUI{
         });
     }
 
+    /**
+     * Highlights every cell that is related to the current cell with focus
+     * @param num The number a user placed on a cell
+     */
     public void highlightCells(int num){
         if(num == 0){
             return;
@@ -132,18 +146,21 @@ public class GameGUI{
 
                 // Row, Column, Block, Number
                 if(x == j || y == k || ((x / 3) == (j / 3) && (y / 3)  == (k / 3)) || currentCell.getPlayerValue() == num){
-                    currentCell.changeBackground(relatedColor);
+                    currentCell.changeBackground(Resources.REALTED_COLOR);
                 }
             }
         }
 
-        focus.changeBackground(focusedColor);
+        focus.changeBackground(Resources.FOCUSED_COLOR);
     }
 
+    /**
+     * Removes the highlighting for every cell on the board
+     */
     public void clearHighlighting(){
         for(int j = 0; j < 9; j++) {
             for (int k = 0; k < 9; k++) {
-                cells[j][k].changeBackground(backgroundColor);
+                cells[j][k].changeBackground(Resources.SUDOKU_BACKGROUND_COLOR);
             }
         }
     }
@@ -152,6 +169,10 @@ public class GameGUI{
         return gamePanel;
     }
 
+    /**
+     * Creates all 81 cells of the game board with a provided difficulty level
+     * @param difficulty The difficulty the game created is
+     */
     public void createCells(int difficulty){
         info.createBoard(difficulty);
 
@@ -160,7 +181,7 @@ public class GameGUI{
         tilePanel.setLayout(currentLayout);
         for(int j = 0; j < 9; j++){
             for(int k = 0; k < 9; k++) {
-                Cell currentCell = new Cell(info.getGeneratedGame()[j][k], info.getGame()[j][k] != 0, backgroundColor, textColor, font);
+                Cell currentCell = new Cell(info.getGeneratedGame()[j][k], info.getGame()[j][k] != 0);
                 cells[j][k] = currentCell;
 
                 int top = 2;
@@ -180,6 +201,7 @@ public class GameGUI{
                     case 3, 6 -> left = 5;
                 }
 
+                // Creates the board look by checking where a cell is located on the game board
                 currentCell.getCell().setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
 
                 tilePanel.add(currentCell.getCell());
@@ -187,10 +209,11 @@ public class GameGUI{
         }
     }
 
-    public void toggleIsDisplayed(){
-        this.isDisplayed = true;
-    }
-
+    /**
+     * Determines if the MouseEvent was a left click and then determines
+     * if it was over a panel on the game board and then toggles its focus
+     * @param mE Mouse Event for any Mouse event on the entire application
+     */
     public void pressMouse(MouseEvent mE){
         if(mE.getModifiersEx() == InputEvent.BUTTON1_DOWN_MASK){
             PointerInfo pointerInfo = MouseInfo.getPointerInfo();
@@ -199,6 +222,7 @@ public class GameGUI{
             int xCord = 0;
             int yCord = 0;
             if(isDisplayed) {
+                // Determines what panel was clicked on based on the cursors position in relation to the tilePanel
                 Point panelPointer = tilePanel.getLocationOnScreen();
                 xCord = pointer.x - panelPointer.x;
                 yCord = pointer.y - panelPointer.y;
@@ -206,6 +230,7 @@ public class GameGUI{
 
             Component c = tilePanel.getComponentAt(xCord, yCord);
             if(c != null){
+                // Making the panel request focus, so the (focus) property change listener will be called
                 c.requestFocusInWindow();
             }
         }

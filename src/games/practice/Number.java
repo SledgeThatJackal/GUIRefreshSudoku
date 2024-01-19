@@ -3,28 +3,34 @@ package games.practice;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Contains/controls the number GUI
+ */
 public class Number {
-    // Swing Components
     private JPanel numberPanel;
     private JLabel userInput;
-    private Color textColor;
 
-    public Number(Color backgroundColor, Color textColor, Font font) {
-        this.textColor = textColor;
+    /**
+     * Setups up the panel and label that displays the player inputted value
+     */
+    public Number() {
+        numberPanel.setBackground(Resources.SUDOKU_BACKGROUND_COLOR);
 
-        numberPanel.setBackground(backgroundColor);
-
-        userInput.setFont(font);
+        userInput.setFont(Resources.FONT);
         userInput.setHorizontalAlignment(JTextField.CENTER);
-        userInput.setForeground(textColor);
+        userInput.setForeground(Resources.CORRECT_TEXT_COLOR);
         userInput.setBorder(null);
         userInput.setFocusable(false);
     }
 
-    public Number(int value, Color backgroundColor, Color textColor, Font font) {
-        this(backgroundColor, textColor, font);
+    /**
+     * Overloaded constructor for creating a number panel for provided tiles
+     * @param value The value that will be displayed at the start the game
+     */
+    public Number(int value) {
+        this();
         userInput.setText(String.valueOf(value));
-        userInput.setForeground(new Color(0, 0, 0));
+        userInput.setForeground(Color.BLACK);
     }
 
     public void setValue(int value) {
@@ -35,11 +41,19 @@ public class Number {
         return numberPanel;
     }
 
+    /**
+     * Changes the text color between green and red based on the value provided
+     * @param isCorrect T/F based on the number the user inputted onto a cell
+     */
     public void setTextColorBasedOnValue(boolean isCorrect){
-        userInput.setForeground(isCorrect ? textColor : new Color(121, 0, 0));
+        userInput.setForeground(isCorrect ? Resources.CORRECT_TEXT_COLOR : Resources.INCORRECT_TEXT_COLOR);
     }
 
-    public JLabel getUserInput(){
-        return userInput;
+    /**
+     * A method for changing the color on the number panel
+     * @param color The new color the background will be
+     */
+    public void changeBackgroundColor(Color color){
+        numberPanel.setBackground(color);
     }
 }

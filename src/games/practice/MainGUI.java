@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Handles the display, click event, and the MainMenu logic
+ */
 public class MainGUI extends JFrame implements ActionListener {
     private JPanel MainMenuPanel;
     private JButton EasyButton;
@@ -17,6 +20,9 @@ public class MainGUI extends JFrame implements ActionListener {
     private final GameGUI gameGUI;
     private final CardLayout cardLayout;
 
+    /**
+     * Setups the frame and the Main Menu
+     */
     public MainGUI(){
         setContentPane(MainMenuPanel);
         setTitle("Sudoku");
@@ -51,10 +57,14 @@ public class MainGUI extends JFrame implements ActionListener {
         Toolkit.getDefaultToolkit().addAWTEventListener(listener, AWTEvent.MOUSE_EVENT_MASK);
     }
 
+    /**
+     * Creates the game cells and changes the display to the game screen
+     * @param e the event to be processed
+     */
     public void actionPerformed(ActionEvent e){
         gameGUI.createCells(Integer.parseInt(e.getActionCommand()));
         cardLayout.show(MainMenuPanel, "game");
-        gameGUI.toggleIsDisplayed();
+        GameGUI.isDisplayed = true;
     }
 
     public static void main(String[] args) {

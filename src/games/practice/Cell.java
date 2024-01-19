@@ -4,17 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.Set;
 
+/**
+ * Controls an individual cell on the game board
+ */
 public class Cell{
-
-    // Swing
     private JPanel cell;
 
-    // Property Names
-    public static final String VISIBLE_NOTE = "visibleNote";
-
-    // Game Fields
     private int playerValue;
     private final int actualValue;
     private boolean isCorrect;
@@ -22,12 +18,14 @@ public class Cell{
     private final boolean isLocked;
     private final Number number;
     private final Notes notes;
-    private final String numberCard = "number";
-    private final String notesCard = "notes";
     private final PropertyChangeSupport PCS = new PropertyChangeSupport(this);
 
-
-    public Cell(int actualValue, boolean isLocked, Color backgroundColor, Color textColor, Font font) {
+    /**
+     * Setups the cell panel and sets up the number and note fields
+     * @param actualValue The value a player should determine
+     * @param isLocked A toggle for determining whether a tile has a player or computer generated tile
+     */
+    public Cell(int actualValue, boolean isLocked) {
         this.actualValue = actualValue;
         this.isLocked = isLocked;
         this.playerValue = isLocked ? actualValue : 0;
@@ -35,22 +33,30 @@ public class Cell{
 
         cell.setFocusable(true);
 
-        number = isLocked ? new Number(actualValue, backgroundColor, textColor, font) : new Number(backgroundColor, textColor, font);
-        notes = new Notes(backgroundColor, font, this);
+        number = isLocked ? new Number(actualValue) : new Number();
+        notes = new Notes(this);
 
-        cell.add(number.getNumberPanel(), numberCard);
-        cell.add(notes.getNotesPanel(), notesCard);
+        cell.add(number.getNumberPanel(), Resources.NUMBER_CARD);
+        cell.add(notes.getNotesPanel(), Resources.NOTE_CARD);
     }
 
+    /**
+     * Changes the card based on the value within a tile
+     */
     public void changeCard(){
         CardLayout cl = (CardLayout) cell.getLayout();
 
-        cl.show(cell, playerValue == 0 ? notesCard : numberCard);
+        cl.show(cell, playerValue == 0 ? Resources.NOTE_CARD : Resources.NUMBER_CARD);
     }
 
     public int getPlayerValue() {
         return playerValue;
     }
+
+    /**
+     * (WIP) A getter method for checking the game state
+     * @return If the tile contains the correct value
+     */
     public boolean isCorrect() {
         return isCorrect;
     }
@@ -63,6 +69,10 @@ public class Cell{
         return cell;
     }
 
+    /**
+     * Sets the cell's value based on the user input and changes colors accordingly
+     * @param move The number a user inputs onto a cell
+     */
     public void inputMove(int move){
         playerValue = move;
         number.setValue(move);
@@ -72,45 +82,37 @@ public class Cell{
         number.setTextColorBasedOnValue(isCorrect);
     }
 
+    /**
+     * Changes the color for both the note and number tile
+     * @param color The new color for the background
+     */
     public void changeBackground(Color color){
-        number.getNumberPanel().setBackground(color);
-
-        for(JLabel currentLabel: notes.getNotes()){
-            currentLabel.setBackground(color);
-        }
-
+        number.changeBackgroundColor(color);
         notes.changeBackgroundColor(color);
     }
 
-    public Set<JLabel> getNoteLabels(){
-        return notes.getNotes();
-    }
-
-    public void setWrittenNotes(boolean[] writtenNotes) {
-        boolean[] oldNotes = this.writtenNotes;
-        this.writtenNotes = writtenNotes;
-
-        PCS.firePropertyChange(VISIBLE_NOTE, oldNotes, writtenNotes);
-    }
-
-    public boolean getWrittenNote(int i) {
-        return writtenNotes[i];
-    }
-
+    /**
+     * Updates whether a note is displayed and fires a property change
+     * @param i Index where the note is located
+     */
     public void setWrittenNote(int i) {
         int index = i - 1;
 
         boolean oldNote = writtenNotes[index];
         writtenNotes[index] = !writtenNotes[index];
 
-        PCS.fireIndexedPropertyChange(VISIBLE_NOTE, index, oldNote, writtenNotes[index]);
+        PCS.fireIndexedPropertyChange(Resources.VISIBLE_NOTE, index, oldNote, writtenNotes[index]);
     }
 
+    /**
+     * Adds a listener from this class that's used for note visibility
+     * @param listener Class listener
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         PCS.addPropertyChangeListener(listener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        PCS.removePropertyChangeListener(listener);
-    }
+//    public void removePropertyChangeListener(PropertyChangeListener listener) {
+//        PCS.removePropertyChangeListener(listener);
+//    }
 }

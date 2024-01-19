@@ -1,5 +1,8 @@
 package games.practice;
 
+/**
+ * (WIP) Handles the creation of the game
+ */
 public class GameInfo {
     private int[][] game;
     private int[][] generatedGame;
