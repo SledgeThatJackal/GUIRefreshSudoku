@@ -3,7 +3,6 @@ package games.practice;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
@@ -122,12 +121,9 @@ public class GameGUI{
             }
         });
 
-        notesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                creatingNotes = !creatingNotes;
-                notesButton.setBackground(creatingNotes ? Color.GREEN : Color.RED);
-            }
+        notesButton.addActionListener(e -> {
+            creatingNotes = !creatingNotes;
+            notesButton.setBackground(creatingNotes ? Color.GREEN : Color.RED);
         });
     }
 
