@@ -27,7 +27,7 @@ public class Notes implements PropertyChangeListener {
         for(int i = 0; i < 9; i++) {
             JLabel label = new JLabel();
 
-            label.setFont(Resources.FONT);
+            label.setFont(Resources.NOTES_FONT);
             label.setHorizontalAlignment(JTextField.CENTER);
             label.setBackground(Resources.SUDOKU_BACKGROUND_COLOR);
             label.setForeground(Resources.NOTE_TEXT_COLOR);

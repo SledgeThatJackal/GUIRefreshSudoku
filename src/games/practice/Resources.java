@@ -43,10 +43,24 @@ public class Resources {
     public static final Color NOTE_HIGHLIGHT_COLOR = new Color(49, 52, 72);
 
     /**
+     * The color for the notes button when it is toggled on
+     */
+    public static final Color NOTE_BUTTON_ON = new Color(1, 121, 1);
+
+    /**
+     * The color for the notes button when it is toggled off
+     */
+    public static final Color NOTE_BUTTON_OFF = new Color(208, 1, 1);
+
+    /**
      * The default font for all text in the application
      */
-    public static final Font FONT = new Font("SansSerif", Font.BOLD, 20);
+    public static final Font DEFAULT_FONT = new Font("SansSerif", Font.BOLD, 20);
 
+    /**
+     * The notes font for all text in the application
+     */
+    public static final Font NOTES_FONT = new Font("Serif", Font.BOLD, 15);
 
     /**
      * The Property Name for the visibility of note labels

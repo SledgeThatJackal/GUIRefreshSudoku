@@ -16,7 +16,7 @@ public class Number {
     public Number() {
         numberPanel.setBackground(Resources.SUDOKU_BACKGROUND_COLOR);
 
-        userInput.setFont(Resources.FONT);
+        userInput.setFont(Resources.DEFAULT_FONT);
         userInput.setHorizontalAlignment(JTextField.CENTER);
         userInput.setForeground(Resources.CORRECT_TEXT_COLOR);
         userInput.setBorder(null);

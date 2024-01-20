@@ -32,7 +32,8 @@ public class GameGUI{
      */
     public GameGUI(){
         info = new GameInfo();
-        notesButton.setBackground(Color.RED);
+        notesButton.setBackground(Resources.NOTE_BUTTON_OFF);
+        notesButton.setFocusPainted(false);
 
         // An action that sets the number a tile displays based on the key pressed
         Action numAction = new AbstractAction() {
@@ -133,7 +134,7 @@ public class GameGUI{
 
         notesButton.addActionListener(e -> {
             creatingNotes = !creatingNotes;
-            notesButton.setBackground(creatingNotes ? Color.GREEN : Color.RED);
+            notesButton.setBackground(creatingNotes ? Resources.NOTE_BUTTON_ON : Resources.NOTE_BUTTON_OFF);
         });
     }
 
@@ -155,7 +156,7 @@ public class GameGUI{
                     currentCell.changeBackground(Resources.REALTED_COLOR);
                 } else {
                     if(num < 10){
-                        currentCell.toggleNoteHighlight(num - 1, Resources.NOTE_HIGHLIGHT_COLOR);
+                        currentCell.toggleNoteHighlight(num - 1, Resources.REALTED_COLOR); // Decide between Related and Resources.NOTE_HIGHLIGHT_COLOR
                     }
                 }
             }
