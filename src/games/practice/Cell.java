@@ -72,11 +72,11 @@ public class Cell{
     /**
      * Highlights a note on a cell
      * @param index Which note is getting highlighted
-     * @param highlight enable/disable highlighting
+     * @param color new color for background
      */
-    public void highlightNote(int index, boolean highlight){
+    public void toggleNoteHighlight(int index, Color color){
         if(writtenNotes[index]){
-            notes.highlightNote(index, highlight);
+            notes.toggleNoteHighlight(index, color);
         }
     }
 
@@ -100,6 +100,10 @@ public class Cell{
     public void changeBackground(Color color){
         number.changeBackgroundColor(color);
         notes.changeBackgroundColor(color);
+
+        for(int i = 0; i < 9; i++){
+            toggleNoteHighlight(i, color);
+        }
     }
 
     public boolean[] getWrittenNotes() {

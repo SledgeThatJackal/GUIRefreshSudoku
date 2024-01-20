@@ -29,12 +29,12 @@ public class Notes implements PropertyChangeListener {
 
             label.setFont(Resources.FONT);
             label.setHorizontalAlignment(JTextField.CENTER);
-            label.setBackground(Resources.NOTE_HIGHLIGHT_COLOR);
+            label.setBackground(Resources.SUDOKU_BACKGROUND_COLOR);
             label.setForeground(Resources.NOTE_TEXT_COLOR);
             label.setBorder(null);
             label.setText(String.valueOf(i + 1));
             label.setVisible(false);
-            label.setOpaque(false);
+            label.setOpaque(true);
 
             notes.add(label);
             notesPanel.add(label);
@@ -47,8 +47,8 @@ public class Notes implements PropertyChangeListener {
         return notesPanel;
     }
 
-    public void highlightNote(int index, boolean highlight){
-        notes.get(index).setOpaque(highlight);
+    public void toggleNoteHighlight(int index, Color color){
+        notes.get(index).setBackground(color);
     }
 
     /**

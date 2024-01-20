@@ -47,8 +47,13 @@ public class GameGUI{
                 clearHighlighting();
 
                 if (creatingNotes) {
-                    if(focus.getPlayerValue() > 0 || checkNote(key)){
+                    if(focus.getPlayerValue() > 0){
                         highlightCells(focus.getPlayerValue());
+                        return;
+                    }
+
+                    if(checkNote(key)){
+                        highlightCells(10);
                         return;
                     }
 
@@ -150,7 +155,7 @@ public class GameGUI{
                     currentCell.changeBackground(Resources.REALTED_COLOR);
                 } else {
                     if(num < 10){
-                        currentCell.highlightNote(num - 1, true);
+                        currentCell.toggleNoteHighlight(num - 1, Resources.NOTE_HIGHLIGHT_COLOR);
                     }
                 }
             }
@@ -170,7 +175,7 @@ public class GameGUI{
                 currentCell.changeBackground(Resources.SUDOKU_BACKGROUND_COLOR);
 
                 for(int i = 0; i < 9; i++){
-                    currentCell.highlightNote(i, false);
+                    currentCell.toggleNoteHighlight(i, Resources.SUDOKU_BACKGROUND_COLOR);
                 }
             }
         }
