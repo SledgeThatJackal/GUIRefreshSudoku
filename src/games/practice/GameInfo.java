@@ -36,7 +36,7 @@ public class GameInfo {
     }
 
     public void createBoard(int selectedDifficulty) {
-        difficulty = selectedDifficulty == 0 ? 30 : selectedDifficulty == 1 ? 25 : selectedDifficulty == 2 ? 20 : 15;
+        difficulty = selectedDifficulty == 0 ? 32 : selectedDifficulty == 1 ? 27 : selectedDifficulty == 2 ? 22 : 17;
 
         int max = 8;
         int min = 0;

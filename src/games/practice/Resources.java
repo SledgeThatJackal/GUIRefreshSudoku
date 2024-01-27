@@ -10,17 +10,17 @@ public class Resources {
     /**
      * The color for a focused tile
      */
-    public static final Color FOCUSED_COLOR = new Color(145, 144, 144);
+    public static final Color FOCUSED_COLOR = new Color(161, 45, 1);
 
     /**
      * The color for any tile related to the focus tile
      */
-    public static final Color REALTED_COLOR = new Color(180, 180, 180);
+    public static final Color REALTED_COLOR = new Color(217, 60, 0);
 
     /**
      * The generic background color for the Sudoku Board
      */
-    public static final Color SUDOKU_BACKGROUND_COLOR = new Color(103, 140, 152);
+    public static final Color SUDOKU_BACKGROUND_COLOR = new Color(116, 183, 204);
 
     /**
      * The color a number will use when it is in the correct place
@@ -51,6 +51,11 @@ public class Resources {
      * The color for the notes button when it is toggled off
      */
     public static final Color NOTE_BUTTON_OFF = new Color(208, 1, 1);
+
+    /**
+     * The color for the lines
+     */
+    public static final Color GRID_LINE_COLOR = new Color(48, 3, 75);
 
     /**
      * The default font for all text in the application

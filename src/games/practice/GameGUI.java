@@ -219,7 +219,7 @@ public class GameGUI{
                 }
 
                 // Creates the board look by checking where a cell is located on the game board
-                currentCell.getCell().setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Color.black));
+                currentCell.getCell().setBorder(BorderFactory.createMatteBorder(top, left, bottom, right, Resources.GRID_LINE_COLOR));
 
                 tilePanel.add(currentCell.getCell());
             }
